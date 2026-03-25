@@ -5,9 +5,7 @@ from .logging_config import setup_logging
 logger = setup_logging()
 
 def place_order(client, symbol, side, order_type, quantity, price=None):
-    """
-    Executes an order and then fetches the updated execution status.
-    """
+    #Executes an order and then fetches the updated execution status
     try:
         logger.info(f"Step 1: Sending {order_type} {side} order for {symbol}...")
 
