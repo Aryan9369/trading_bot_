@@ -19,16 +19,16 @@ def place_order(client, symbol, side, order_type, quantity, price=None):
             params["price"] = str(price)
             params["timeInForce"] = "GTC"
 
-        # 1. Place the order
+        #Place the order
         initial_response = client.futures_create_order(**params)
         order_id = initial_response.get("orderId")
         
         logger.info(f"Step 2: Order {order_id} received. Fetching execution details...")
 
-        # 2. Wait a brief moment for the matching engine to process
+        #Wait a brief moment for the matching engine to process
         time.sleep(0.5) 
 
-        # 3. THE UPGRADE: Fetch the updated status
+        #THE UPGRADE: Fetch the updated status
         updated_order = client.futures_get_order(
             symbol=symbol,
             orderId=order_id
