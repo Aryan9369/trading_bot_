@@ -9,9 +9,9 @@ from bot.logging_config import setup_logging
 logger = setup_logging()
 
 def main():
-    # Setup CLI Argument Parser with a cleaner description
+    # Setup CLI Argument Parser 
     parser = argparse.ArgumentParser(
-        description="🚀 Trading Bot CLI - Binance Futures Testnet (USDT-M)",
+        description=" Trading Bot CLI - Binance Futures Testnet (USDT-M)",
         formatter_class=argparse.RawTextHelpFormatter
     )
     
@@ -24,17 +24,17 @@ def main():
     args = parser.parse_args()
 
     try:
-        # 1. Validate User Inputs
+        #Validate User Inputs
         valid_data = validate_order_inputs(
             args.symbol, args.side, args.type, args.quantity, args.price
         )
 
-        # 2. Initialize the Binance Client
+        #Initialize the Binance Client
         client = get_binance_client()
 
-        # 3. Print Request Header (UX Improvement)
+        #Print Request Header (UX Improvement)
         print("\n" + "═" * 45)
-        print(" 🛰️  ESTABLISHING ORDER REQUEST")
+        print(" ESTABLISHING ORDER REQUEST")
         print("═" * 45)
         print(f" Symbol:    {valid_data['symbol']}")
         print(f" Side:      {valid_data['side']}")
@@ -44,7 +44,7 @@ def main():
             print(f" Price:     {valid_data['price']}")
         print("═" * 45 + "\n")
 
-        # 4. Place Order and Fetch Updated Execution Details
+        #Place Order and Fetch Updated Execution Details
         # This function now includes the professional 'poll-for-update' logic
         response = place_order(
             client, 
@@ -55,7 +55,7 @@ def main():
             valid_data['price']
         )
 
-        # 5. Extract Execution Details
+        #Extract Execution Details
         order_id = response.get('orderId')
         status = response.get('status')
         exe_qty = float(response.get('executedQty', 0))
@@ -65,7 +65,7 @@ def main():
         # Logic: Calculate Fill Percentage
         fill_pct = (exe_qty / req_qty) * 100 if req_qty > 0 else 0
 
-        # 6. Final Professional Execution Summary
+        #Final Professional Execution Summary
         print(" ✅ ORDER EXECUTED SUCCESSFULLY")
         print("─" * 45)
         print(f" Order ID:       {order_id}")
@@ -83,15 +83,15 @@ def main():
 
     except ValueError as ve:
         logger.error(f"Input Validation Error: {ve}")
-        print(f" ❌ INPUT ERROR: {ve}")
+        print(f" INPUT ERROR: {ve}")
         sys.exit(1)
     except ConnectionError as ce:
         logger.error(f"Authentication/Connection Error: {ce}")
-        print(f" ❌ CONNECTION ERROR: {ce}")
+        print(f" CONNECTION ERROR: {ce}")
         sys.exit(1)
     except Exception as e:
         # Errors from Binance API are already logged in orders.py
-        print(f" ❌ EXECUTION FAILED: {e}")
+        print(f" EXECUTION FAILED: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
