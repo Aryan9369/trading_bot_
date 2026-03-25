@@ -2,7 +2,7 @@ import logging
 import sys
 
 def setup_logging():
-    """Configures logging to both file and console."""
+    #Configures logging to both file and console
     log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     
     logging.basicConfig(
